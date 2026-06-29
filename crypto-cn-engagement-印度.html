@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CryptoIN | Crypto platform for India</title>
+  <meta name="description" content="Buy and sell Bitcoin, Ethereum, USDT, and other crypto assets with INR pricing, UPI or bank transfer funding, and a welcome benefit for new users in India.">
+  <style>
+    :root {
+      --ink: #101318;
+      --panel: #161b24;
+      --panel-2: #202737;
+      --paper: #f7f9fc;
+      --muted: #667085;
+      --line: rgba(16, 19, 24, .12);
+      --primary: #00a36c;
+      --primary-dark: #08734f;
+      --gold: #f2a900;
+      --blue: #1d6fd1;
+      --red: #d94343;
+      --white: #ffffff;
+      --shadow: 0 22px 60px rgba(16, 19, 24, .22);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      color: var(--ink);
+      background: var(--paper);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--gold), var(--blue));
+      z-index: 1000;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: fixed;
+      top: 4px;
+      left: 0;
+      right: 0;
+      z-index: 900;
+      color: var(--white);
+      background: rgba(16, 19, 24, .86);
+      border-bottom: 1px solid rgba(255, 255, 255, .1);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-inner {
+      width: min(1180px, calc(100% - 32px));
+      height: 70px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: var(--ink);
+      background: var(--gold);
+      font-weight: 900;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: rgba(255, 255, 255, .76);
+      font-size: 14px;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      min-height: 44px;
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 800;
+      transition: transform .22s ease, box-shadow .22s ease, background .22s ease, border .22s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(16, 19, 24, .2);
+    }
+
+    .btn-primary {
+      color: var(--white);
+      background: var(--primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-gold {
+      color: var(--ink);
+      background: var(--gold);
+    }
+
+    .btn-outline {
+      color: var(--white);
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, .26);
+    }
+
+    .btn-light {
+      color: var(--ink);
+      background: var(--white);
+      border: 1px solid var(--line);
+    }
+
+    .hero {
+      min-height: 94vh;
+      padding: 130px 0 76px;
+      display: grid;
+      align-items: center;
+      color: var(--white);
+      background:
+        linear-gradient(90deg, rgba(16, 19, 24, .94) 0%, rgba(16, 19, 24, .82) 48%, rgba(16, 19, 24, .28) 100%),
+        url("https://images.unsplash.com/photo-1640340434855-6084b1f4901c?auto=format&fit=crop&w=1800&q=85") center/cover no-repeat;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 680px) minmax(320px, 430px);
+      gap: 46px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      margin-bottom: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .2);
+      background: rgba(255, 255, 255, .08);
+      color: rgba(255, 255, 255, .86);
+      font-size: 13px;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--primary);
+      box-shadow: 0 0 0 8px rgba(0, 163, 108, .18);
+    }
+
+    h1 {
+      max-width: 760px;
+      font-size: clamp(40px, 6vw, 72px);
+      line-height: 1.05;
+      letter-spacing: 0;
+      margin-bottom: 20px;
+    }
+
+    .hero-copy {
+      max-width: 640px;
+      color: rgba(255, 255, 255, .82);
+      font-size: 19px;
+      margin-bottom: 30px;
+    }
+
+    .hero-actions,
+    .trust-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .trust-strip {
+      margin-top: 34px;
+      color: rgba(255, 255, 255, .78);
+    }
+
+    .trust-item {
+      min-width: 145px;
+      padding-left: 14px;
+      border-left: 2px solid rgba(255, 255, 255, .22);
+    }
+
+    .trust-item strong {
+      display: block;
+      color: var(--white);
+      font-size: 22px;
+      line-height: 1.18;
+    }
+
+    .market-card {
+      background: rgba(255, 255, 255, .95);
+      color: var(--ink);
+      border: 1px solid rgba(255, 255, 255, .3);
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .market-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .market-head small {
+      color: var(--muted);
+    }
+
+    .coin-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .coin {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+    }
+
+    .coin small {
+      color: var(--muted);
+    }
+
+    .up {
+      color: var(--primary);
+    }
+
+    .down {
+      color: var(--red);
+    }
+
+    .mini-chart {
+      height: 136px;
+      margin-top: 14px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcff;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .section {
+      padding: 82px 0;
+    }
+
+    .section.dark {
+      color: var(--white);
+      background: var(--ink);
+    }
+
+    .section.soft {
+      background: #edf2f7;
+    }
+
+    .section-title {
+      max-width: 790px;
+      margin-bottom: 34px;
+    }
+
+    .section-title.center {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    .section-title h2 {
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.14;
+      letter-spacing: 0;
+      margin-bottom: 12px;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .dark .section-title p {
+      color: rgba(255, 255, 255, .68);
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      min-height: 100%;
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--white);
+      transition: transform .22s ease, box-shadow .22s ease, border .22s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0, 163, 108, .35);
+      box-shadow: 0 18px 44px rgba(16, 19, 24, .12);
+    }
+
+    .dark .card {
+      color: var(--white);
+      background: var(--panel);
+      border-color: rgba(255, 255, 255, .1);
+    }
+
+    .icon {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      color: var(--ink);
+      background: var(--gold);
+      font-weight: 900;
+      font-size: 20px;
+    }
+
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 9px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .dark .card p {
+      color: rgba(255, 255, 255, .68);
+    }
+
+    .table {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: 0 14px 40px rgba(16, 19, 24, .08);
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .tab {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 9px 14px;
+      color: var(--muted);
+      background: var(--white);
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .tab.active {
+      color: var(--white);
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr .8fr .8fr;
+      gap: 12px;
+      align-items: center;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .row:last-child {
+      border-bottom: 0;
+    }
+
+    .row small {
+      color: var(--muted);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      padding: 28px;
+      border-radius: 8px;
+      background: var(--white);
+      border: 1px solid var(--line);
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      color: var(--white);
+      background: var(--primary);
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .step h3 {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      color: var(--muted);
+    }
+
+    .security-layout {
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 26px;
+      align-items: center;
+    }
+
+    .security-panel {
+      padding: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--panel), var(--panel-2));
+      border: 1px solid rgba(255, 255, 255, .1);
+      box-shadow: var(--shadow);
+    }
+
+    .check-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .08);
+      color: rgba(255, 255, 255, .86);
+    }
+
+    .check::before {
+      content: "✓";
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      color: var(--ink);
+      background: var(--gold);
+      font-weight: 900;
+    }
+
+    .faq {
+      display: grid;
+      gap: 10px;
+    }
+
+    .faq-item {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+    }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 18px;
+      border: 0;
+      color: var(--ink);
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+      font-weight: 850;
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 0 18px 18px;
+      color: var(--muted);
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    .final-cta {
+      padding: 70px 0;
+      color: var(--white);
+      background:
+        linear-gradient(90deg, rgba(16, 19, 24, .94), rgba(16, 19, 24, .76)),
+        url("https://images.unsplash.com/photo-1639322537228-dc871418009f?auto=format&fit=crop&w=1600&q=85") center/cover no-repeat;
+    }
+
+    .final-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .final-box h2 {
+      max-width: 760px;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.14;
+      margin-bottom: 10px;
+    }
+
+    .final-box p {
+      color: rgba(255, 255, 255, .72);
+      font-size: 17px;
+    }
+
+    .footer {
+      padding: 30px 0;
+      color: var(--muted);
+      background: var(--white);
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+    }
+
+    .footer .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1200;
+      display: none;
+      place-items: center;
+      padding: 18px;
+      background: rgba(16, 19, 24, .68);
+    }
+
+    .modal.show {
+      display: grid;
+    }
+
+    .modal-box {
+      width: min(520px, 100%);
+      padding: 26px;
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+      animation: pop .22s ease;
+    }
+
+    @keyframes pop {
+      from {
+        opacity: 0;
+        transform: scale(.94);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .modal-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .modal-top h3 {
+      font-size: 28px;
+      line-height: 1.15;
+    }
+
+    .modal-top p {
+      margin-top: 8px;
+      color: var(--muted);
+    }
+
+    .close {
+      width: 40px;
+      height: 40px;
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      cursor: pointer;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .bonus-list {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .bonus {
+      padding: 12px;
+      border: 1px solid rgba(0, 163, 108, .22);
+      border-radius: 8px;
+      background: rgba(0, 163, 108, .08);
+      font-weight: 750;
+    }
+
+    .form {
+      display: grid;
+      gap: 12px;
+    }
+
+    .input {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(0, 163, 108, .12);
+    }
+
+    .success {
+      display: none;
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 8px;
+      color: var(--primary-dark);
+      background: rgba(0, 163, 108, .1);
+      border: 1px solid rgba(0, 163, 108, .25);
+    }
+
+    .sticky-cta {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      z-index: 850;
+      width: min(680px, calc(100% - 24px));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      color: var(--white);
+      background: rgba(16, 19, 24, .94);
+      box-shadow: var(--shadow);
+      transform: translate(-50%, 130%);
+      transition: transform .25s ease;
+    }
+
+    .sticky-cta.show {
+      transform: translate(-50%, 0);
+    }
+
+    .sticky-cta span {
+      color: rgba(255, 255, 255, .78);
+      font-size: 14px;
+    }
+
+    .sticky-actions {
+      display: flex;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .mini-btn {
+      padding: 9px 12px;
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 8px;
+      color: var(--white);
+      background: rgba(255, 255, 255, .1);
+      cursor: pointer;
+    }
+
+    @media (max-width: 930px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero-grid,
+      .security-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-3,
+      .steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .final-box {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container,
+      .nav-inner {
+        width: min(100% - 22px, 1180px);
+      }
+
+      .nav-actions .btn-outline {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      h1 {
+        font-size: 40px;
+      }
+
+      .grid-3,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .row {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .sticky-cta {
+        align-items: stretch;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#home" aria-label="CryptoIN home">
+        <span class="brand-mark">₿</span>
+        <span>CryptoIN</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#markets">Live markets</a>
+        <a href="#why">Advantages</a>
+        <a href="#steps">Process</a>
+        <a href="#security">Security</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="btn btn-outline" data-open-modal>Log in</button>
+        <button class="btn btn-primary" data-open-modal>Register and claim benefit</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow"><span class="live-dot"></span> Crypto access for users in India</div>
+          <h1>Buy Bitcoin and major crypto assets with a clear India-ready flow</h1>
+          <p class="hero-copy">Access USDT, BTC, ETH, and 100+ assets. View prices in INR, prepare UPI or bank funding, and get English setup support when you sign up.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" data-open-modal>Start now</button>
+            <a class="btn btn-outline" href="#markets">View live markets</a>
+          </div>
+          <div class="trust-strip">
+            <div class="trust-item"><strong>500 mil+</strong>registered users</div>
+            <div class="trust-item"><strong>3 min</strong>guided buy flow</div>
+            <div class="trust-item"><strong>24/7</strong>English support</div>
+          </div>
+        </div>
+
+        <aside class="market-card" aria-label="Live market preview">
+          <div class="market-head">
+            <div>
+              <b>Live markets</b>
+              <br>
+              <small>Simulated prices for major assets</small>
+            </div>
+            <small id="clock">Updating</small>
+          </div>
+          <div class="coin-list">
+            <div class="coin">
+              <div><b>BTC / INR</b><br><small>Bitcoin</small></div>
+              <div><b id="btcPrice">₹5,700,000</b><br><span class="up" id="btcMove">+1.24%</span></div>
+            </div>
+            <div class="coin">
+              <div><b>ETH / INR</b><br><small>Ethereum</small></div>
+              <div><b id="ethPrice">₹310,000</b><br><span class="down" id="ethMove">-0.38%</span></div>
+            </div>
+            <div class="coin">
+              <div><b>SOL / INR</b><br><small>Solana</small></div>
+              <div><b id="solPrice">₹12,900</b><br><span class="up" id="solMove">+2.06%</span></div>
+            </div>
+          </div>
+          <div class="mini-chart">
+            <canvas id="chart" width="520" height="170"></canvas>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="markets">
+      <div class="container">
+        <div class="section-title center">
+          <h2>Watch the market before you trade</h2>
+          <p>Check INR prices, daily moves, and popular assets. You can observe the market first, then decide whether to open an account.</p>
+        </div>
+        <div class="tabs" aria-label="Market categories">
+          <button class="tab active" data-market="hot">Popular assets</button>
+          <button class="tab" data-market="stable">Stablecoins</button>
+          <button class="tab" data-market="new">New assets</button>
+        </div>
+        <div class="table" id="marketTable"></div>
+      </div>
+    </section>
+
+    <section class="section soft" id="why">
+      <div class="container">
+        <div class="section-title center">
+          <h2>Why more people in India start here</h2>
+          <p>From signup, deposits, buying, selling, and withdrawals, the experience is kept clear: fast actions, transparent fees, account protection, and English support.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <div class="icon">INR</div>
+            <h3>Fast flow</h3>
+            <p>Signup, verification, and buy entry are arranged step by step so the next action is clear.</p>
+          </article>
+          <article class="card">
+            <div class="icon">Fee</div>
+            <h3>Clear fees</h3>
+            <p>Fees are shown before trading. Good for small first attempts or frequent market checks.</p>
+          </article>
+          <article class="card">
+            <div class="icon">Seg</div>
+            <h3>Account protection</h3>
+            <p>Verification, cold and hot storage, login alerts, and withdrawal review help protect the account.</p>
+          </article>
+          <article class="card">
+            <div class="icon">ES</div>
+            <h3>English support</h3>
+            <p>24/7 help for signup, UPI funding, buying, selling, withdrawals, and account verification.</p>
+          </article>
+          <article class="card">
+            <div class="icon">100+</div>
+            <h3>Major assets</h3>
+            <p>Bitcoin, Ethereum, USDT, SOL, BNB, and other assets are available in one account.</p>
+          </article>
+          <article class="card">
+            <div class="icon">Bon</div>
+            <h3>New user benefit</h3>
+            <p>After signup, you can review fee coupons, promotional limits, or welcome access.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="steps">
+      <div class="container">
+        <div class="section-title center">
+          <h2>Start your first crypto trade in 3 steps</h2>
+          <p>A simple process makes signup feel lighter and keeps the next step clear.</p>
+        </div>
+        <div class="steps">
+          <article class="step">
+            <h3>Create account</h3>
+            <p>Sign up with email or mobile number, then complete basic verification.</p>
+          </article>
+          <article class="step">
+            <h3>Fund with INR</h3>
+            <p>Prepare a local funding route with PAN/KYC, UPI, or bank transfer where available in India.</p>
+          </article>
+          <article class="step">
+            <h3>Buy or sell crypto</h3>
+            <p>Choose BTC, ETH, USDT, or another asset, review the INR amount, then confirm the trade.</p>
+          </article>
+        </div>
+        <div style="text-align:center; margin-top: 30px;">
+          <button class="btn btn-primary" data-open-modal>Create account sekarang</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark" id="security">
+      <div class="container security-layout">
+        <div class="section-title">
+          <h2>Account security comes first</h2>
+          <p>The flow combines login verification, device recognition, activity alerts, cold storage, and withdrawal checks.</p>
+          <button class="btn btn-gold" data-open-modal>Get secure signup guide</button>
+        </div>
+        <div class="security-panel">
+          <h3 style="font-size: 26px;">Security checklist</h3>
+          <div class="check-list">
+            <div class="check">Two-step verification</div>
+            <div class="check">Cold and hot storage</div>
+            <div class="check">Unusual login alerts</div>
+            <div class="check">Withdrawal review</div>
+            <div class="check">Account risk controls</div>
+            <div class="check">Continuous monitoring</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section soft" id="faq">
+      <div class="container">
+        <div class="section-title center">
+          <h2>FAQ</h2>
+          <p>Quick answers about signup, UPI, assets, fees, and security.</p>
+        </div>
+        <div class="faq">
+          <article class="faq-item open">
+            <button class="faq-question" type="button">Can beginners use it?<span>−</span></button>
+            <div class="faq-answer">Yes. The flow starts with signup, UPI deposit, buying, selling, and withdrawals, with English support.</div>
+          </article>
+          <article class="faq-item">
+            <button class="faq-question" type="button">How long does signup take?<span>+</span></button>
+            <div class="faq-answer">Usually a few minutes. After email or mobile verification, you can enter your account.</div>
+          </article>
+          <article class="faq-item">
+            <button class="faq-question" type="button">Which crypto assets are available?<span>+</span></button>
+            <div class="faq-answer">BTC, ETH, USDT, SOL, BNB, and other major assets.</div>
+          </article>
+          <article class="faq-item">
+            <button class="faq-question" type="button">Are the fees high?<span>+</span></button>
+            <div class="faq-answer">Fees are shown clearly, and new users can review fee coupons.</div>
+          </article>
+          <article class="faq-item">
+            <button class="faq-question" type="button">How is the account protected?<span>+</span></button>
+            <div class="faq-answer">Verification, alerts, withdrawal review, and controls help reduce operational risk.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="container final-box">
+        <div>
+          <h2>Register now and claim your welcome benefit</h2>
+          <p>After creating an account, you can view campaigns, live markets, and trade access.</p>
+        </div>
+        <div class="hero-actions">
+          <button class="btn btn-primary" data-open-modal>Register now</button>
+          <a class="btn btn-outline" href="#markets">View market</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <span>© 2026 CryptoIN. All rights reserved.</span>
+      <span>Terms · Privacy · Support center · Risk notice</span>
+    </div>
+  </footer>
+
+  <div class="sticky-cta" id="stickyCta">
+    <span>Benefit available: fee coupon, promotional limit, and signup guide.</span>
+    <div class="sticky-actions">
+      <button class="mini-btn" data-open-modal>Claim</button>
+      <button class="mini-btn" id="hideSticky">Later</button>
+    </div>
+  </div>
+
+  <div class="modal" id="bonusModal" role="dialog" aria-modal="true" aria-labelledby="bonusTitle">
+    <div class="modal-box">
+      <div class="modal-top">
+        <div>
+          <h3 id="bonusTitle">New user benefit para novos usuarios</h3>
+          <p>Complete signup to unlock three benefits.</p>
+        </div>
+        <button class="close" type="button" id="closeModal" aria-label="Close">×</button>
+      </div>
+      <div class="bonus-list">
+        <div class="bonus">First trade fee coupon</div>
+        <div class="bonus">New user promotional limit</div>
+        <div class="bonus">Account opening guide with English support</div>
+      </div>
+      <form class="form" id="bonusForm">
+        <input class="input" type="text" placeholder="Your name" required>
+        <input class="input" type="email" placeholder="Your email" required>
+        <input class="input" type="tel" placeholder="Your mobile number" required>
+        <button class="btn btn-primary" type="submit">Register and claim benefit</button>
+      </form>
+      <div class="success" id="successMsg">Done. The signup link and benefit details are ready for you.</div>
+    </div>
+  </div>
+
+  <script>
+    const scrollProgress = document.getElementById("scrollProgress");
+    const stickyCta = document.getElementById("stickyCta");
+    let stickyHidden = false;
+
+    window.addEventListener("scroll", () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = max > 0 ? window.scrollY / max : 0;
+      scrollProgress.style.width = `${pct * 100}%`;
+      if (pct > 0.28 && !stickyHidden) stickyCta.classList.add("show");
+    });
+
+    document.getElementById("hideSticky").addEventListener("click", () => {
+      stickyHidden = true;
+      stickyCta.classList.remove("show");
+    });
+
+    const modal = document.getElementById("bonusModal");
+    const openModal = () => modal.classList.add("show");
+    const closeModal = () => modal.classList.remove("show");
+
+    document.querySelectorAll("[data-open-modal]").forEach(button => {
+      button.addEventListener("click", openModal);
+    });
+
+    document.getElementById("closeModal").addEventListener("click", closeModal);
+    modal.addEventListener("click", event => {
+      if (event.target === modal) closeModal();
+    });
+
+    setTimeout(() => {
+      if (!sessionStorage.getItem("bonusShownIn")) {
+        sessionStorage.setItem("bonusShownIn", "1");
+        openModal();
+      }
+    }, 3500);
+
+    document.getElementById("bonusForm").addEventListener("submit", event => {
+      event.preventDefault();
+      event.currentTarget.style.display = "none";
+      document.getElementById("successMsg").style.display = "block";
+    });
+
+    const prices = {
+      btc: { value: 5700000, move: 1.24 },
+      eth: { value: 310000, move: -0.38 },
+      sol: { value: 12900, move: 2.06 }
+    };
+
+    function updateTicker() {
+      Object.entries(prices).forEach(([key, data]) => {
+        data.value *= 1 + (Math.random() - .48) / 240;
+        data.move += (Math.random() - .5) / 12;
+        const price = document.getElementById(`${key}Price`);
+        const move = document.getElementById(`${key}Move`);
+        price.textContent = `₹${Math.round(data.value).toLocaleString("en-IN")}`;
+        move.textContent = `${data.move >= 0 ? "+" : ""}${data.move.toFixed(2)}%`;
+        move.className = data.move >= 0 ? "up" : "down";
+      });
+      document.getElementById("clock").textContent = new Date().toLocaleTimeString("en-IN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      });
+    }
+
+    const canvas = document.getElementById("chart");
+    const ctx = canvas.getContext("2d");
+    let points = Array.from({ length: 34 }, (_, i) => 78 + Math.sin(i / 3) * 18 + Math.random() * 14);
+
+    function drawChart() {
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+      ctx.strokeStyle = "rgba(16, 19, 24, .08)";
+      ctx.lineWidth = 1;
+      for (let i = 1; i < 4; i += 1) {
+        ctx.beginPath();
+        ctx.moveTo(0, h * i / 4);
+        ctx.lineTo(w, h * i / 4);
+        ctx.stroke();
+      }
+
+      const min = Math.min(...points) - 8;
+      const max = Math.max(...points) + 8;
+      const step = w / (points.length - 1);
+      const y = value => h - ((value - min) / (max - min)) * (h - 18) - 9;
+      const gradient = ctx.createLinearGradient(0, 0, 0, h);
+      gradient.addColorStop(0, "rgba(0, 163, 108, .3)");
+      gradient.addColorStop(1, "rgba(0, 163, 108, 0)");
+
+      ctx.beginPath();
+      points.forEach((point, index) => {
+        const x = index * step;
+        if (index === 0) ctx.moveTo(x, y(point));
+        else ctx.lineTo(x, y(point));
+      });
+      ctx.lineTo(w, h);
+      ctx.lineTo(0, h);
+      ctx.closePath();
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      ctx.beginPath();
+      points.forEach((point, index) => {
+        const x = index * step;
+        if (index === 0) ctx.moveTo(x, y(point));
+        else ctx.lineTo(x, y(point));
+      });
+      ctx.strokeStyle = "#00a36c";
+      ctx.lineWidth = 3;
+      ctx.stroke();
+      points = [...points.slice(1), points.at(-1) + (Math.random() - .45) * 12];
+    }
+
+    updateTicker();
+    drawChart();
+    setInterval(updateTicker, 2600);
+    setInterval(drawChart, 1800);
+
+    const marketData = {
+      hot: [
+        ["BTC", "Bitcoin", "₹5,700,000", "+1.24%"],
+        ["ETH", "Ethereum", "₹310,000", "-0.38%"],
+        ["SOL", "Solana", "₹12,900", "+2.06%"],
+        ["BNB", "BNB", "₹50,500", "+0.52%"]
+      ],
+      stable: [
+        ["USDT", "Tether", "₹83.2", "+0.01%"],
+        ["USDC", "USD Coin", "₹83.1", "-0.02%"],
+        ["DAI", "Dai", "₹83.2", "+0.03%"],
+        ["FDUSD", "First Digital USD", "₹83.2", "0.00%"]
+      ],
+      new: [
+        ["ARB", "Arbitrum", "₹98", "+4.12%"],
+        ["OP", "Optimism", "₹201", "+2.86%"],
+        ["SUI", "Sui", "₹86.4", "-1.45%"],
+        ["TIA", "Celestia", "₹725", "+5.33%"]
+      ]
+    };
+
+    function renderMarket(type) {
+      const table = document.getElementById("marketTable");
+      table.innerHTML = marketData[type].map(row => `
+        <div class="row">
+          <div><b>${row[0]}</b><br><small>${row[1]}</small></div>
+          <div>${row[2]}</div>
+          <div class="${row[3].startsWith("-") ? "down" : "up"}">${row[3]}</div>
+          <button class="btn btn-light" data-open-modal>Buy / sell</button>
+        </div>
+      `).join("");
+      table.querySelectorAll("[data-open-modal]").forEach(button => {
+        button.addEventListener("click", openModal);
+      });
+    }
+
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach(item => item.classList.remove("active"));
+        tab.classList.add("active");
+        renderMarket(tab.dataset.market);
+      });
+    });
+
+    renderMarket("hot");
+
+    document.querySelectorAll(".faq-question").forEach(button => {
+      button.addEventListener("click", () => {
+        const item = button.closest(".faq-item");
+        const open = item.classList.toggle("open");
+        button.querySelector("span").textContent = open ? "−" : "+";
+      });
+    });
+  </script>
+</body>
+</html>
